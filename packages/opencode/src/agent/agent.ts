@@ -14,6 +14,7 @@ import PROMPT_EXPLORE from "./prompt/explore.txt"
 import PROMPT_SUMMARY from "./prompt/summary.txt"
 import PROMPT_TITLE from "./prompt/title.txt"
 import { PermissionNext } from "@/permission/next"
+import { createForgeAgents } from "@/forge/agents"
 import { mergeDeep, pipe, sortBy, values } from "remeda"
 import { Global } from "@/global"
 import path from "path"
@@ -200,6 +201,11 @@ export namespace Agent {
         ),
         prompt: PROMPT_SUMMARY,
       },
+    }
+
+    // Inject Forge AI agents (user config can override via cfg.agent["forge-orchestrator"] = {...})
+    for (const [key, agent] of Object.entries(createForgeAgents(defaults, user))) {
+      if (!result[key]) result[key] = agent
     }
 
     for (const [key, value] of Object.entries(cfg.agent ?? {})) {

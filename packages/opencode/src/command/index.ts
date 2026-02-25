@@ -5,6 +5,7 @@ import { Instance } from "../project/instance"
 import { Identifier } from "../id/id"
 import PROMPT_INITIALIZE from "./template/initialize.txt"
 import PROMPT_REVIEW from "./template/review.txt"
+import PROMPT_FORGE from "./template/forge.txt"
 import { MCP } from "../mcp"
 import { Skill } from "../skill"
 
@@ -54,6 +55,7 @@ export namespace Command {
   export const Default = {
     INIT: "init",
     REVIEW: "review",
+    FORGE: "forge",
   } as const
 
   const state = Instance.state(async () => {
@@ -78,6 +80,16 @@ export namespace Command {
         },
         subtask: true,
         hints: hints(PROMPT_REVIEW),
+      },
+      [Default.FORGE]: {
+        name: Default.FORGE,
+        description: "Run multi-agent governed code generation pipeline",
+        source: "command",
+        agent: "forge-orchestrator",
+        get template() {
+          return PROMPT_FORGE
+        },
+        hints: hints(PROMPT_FORGE),
       },
     }
 

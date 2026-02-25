@@ -1,0 +1,4 @@
+Execute a Forge AI pipeline for the following task: $ARGUMENTS
+
+Follow the Forge AI pipeline exactly as described in your system prompt.
+Begin with Stage 1 (Plan).
